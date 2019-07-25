@@ -47,7 +47,7 @@ module.exports = {
     path: resolveFromRoot('./dist'),
     globalObject: 'this', // tvjs doesn't have window object
   },
-  devtool: isProd ? 'source-map' : 'eval-source-map',
+  devtool: isProd ? 'source-map' : 'inline-source-map',
   mode: isProd ? 'production' : 'development',
   externals: ['react'], // peerDependencies
   module: { rules },

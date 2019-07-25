@@ -7,18 +7,14 @@ export * from './pipelines';
 export * from './navigation';
 export { default as ReactTVML } from './react-tvml';
 
-subscribe('uncontrolled-document-dismissal').pipe((document) => {
-  const {
-    modal,
-    route,
-  } = document;
+subscribe('uncontrolled-document-dismissal').pipe(document => {
+  const { modal, route } = document;
 
   let { prevRouteDocument } = document;
+  if (prevRouteDocument === undefined) return;
 
   const prevDocumentElement = prevRouteDocument.documentElement;
-  const menuBar = prevDocumentElement
-    .getElementsByTagName('menuBar')
-    .item(0);
+  const menuBar = prevDocumentElement.getElementsByTagName('menuBar').item(0);
 
   if (menuBar) {
     const menuBarDocument = menuBar.getFeature('MenuBarDocument');
@@ -26,10 +22,7 @@ subscribe('uncontrolled-document-dismissal').pipe((document) => {
     prevRouteDocument = menuBarDocument.getDocument(menuItem);
   }
 
-  const {
-    route: prevRoute,
-    modal: prevModal,
-  } = prevRouteDocument;
+  const { route: prevRoute, modal: prevModal } = prevRouteDocument;
 
   broadcast('menu-button-press', {
     from: {
